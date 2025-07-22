@@ -38,21 +38,25 @@ export default function endpoint(req: VercelRequest, res: VercelResponse) {
             "square"
         ),
         size = Number(queryValue(req.query["size"] ?? "20")),
-        top = Number(queryValue(req.query["top"] ?? req.query["t"] ?? "0")),
-        bottom = Number(
-            queryValue(req.query["bottom"] ?? req.query["b"] ?? "2")
-        ),
-        left = Number(queryValue(req.query["left"] ?? req.query["l"] ?? "0")),
-        right = Number(queryValue(req.query["right"] ?? req.query["r"] ?? "0")),
         text = queryValue(req.query["text"] ?? ""),
         textColor = parseColor(
             queryValue(req.query["textColor"] ?? req.query["tc"] ?? "#FFF")
         ),
+        top = Number(
+            queryValue(req.query["top"] ?? req.query["t"] ?? text ? "8" : "0")
+        ),
+        bottom = Number(
+            queryValue(req.query["bottom"] ?? req.query["b"] ?? "2")
+        ),
+        left = Number(
+            queryValue(req.query["left"] ?? req.query["l"] ?? text ? "16" : "0")
+        ),
+        right = Number(queryValue(req.query["right"] ?? req.query["r"] ?? "0")),
         width =
             left +
             (text ? text.length * 8 : size) +
             (right || (text ? left : 0)),
-        height = top + (text ? 8 : size) + (bottom || (text ? top : 0));
+        height = top + (text ? 15 : size) + (bottom || (text ? top : 0));
     // create swatch shape
     let shape: string;
     if (style !== "circle") {
