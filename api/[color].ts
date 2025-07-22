@@ -61,21 +61,21 @@ export default function endpoint(req: VercelRequest, res: VercelResponse) {
     if (style !== "circle") {
         const radius = style === "round" ? size / 5 : 0;
         if (text) {
-            shape = `<rect fill='${color}' x='${left}' y='${top}' width='${size}' height='${size}' rx='${radius}'><text x='${
+            shape = `<rect fill='${color}' x='${left}' y='${top}' width='${width}' height='${height}' rx='${radius}'/><text x='${
                 left + size / 2
             }' y='${
                 top + size / 2
-            }' fill='${textColor}' dominant-baseline='middle' text-anchor='middle'>${text}</text></rect>`;
+            }' fill='${textColor}' dominant-baseline='middle' text-anchor='middle'>${text}</text>`;
         } else {
-            shape = `<rect fill='${color}' x='${left}' y='${top}' width='${size}' height='${size}' rx='${radius}'/>`;
+            shape = `<rect fill='${color}' x='${left}' y='${top}' width='${width}' height='${height}' rx='${radius}'/>`;
         }
     } else {
         if (text) {
             shape = `<rect fill='${color}' x='${left}' y='${top}' width='${size}' height='${size}' rx='${
                 size / 2
-            }'><text x='${left + size / 2}' y='${
+            }'/><text x='${left + size / 2}' y='${
                 top + size / 2
-            }' fill='${textColor}' dominant-baseline='middle' text-anchor='middle'>${text}</text></rect>`;
+            }' fill='${textColor}' dominant-baseline='middle' text-anchor='middle'>${text}</text>`;
         } else {
             shape = `<circle fill='${color}' cx='${left + size / 2}' cy='${
                 top + size / 2
