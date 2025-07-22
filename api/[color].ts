@@ -50,9 +50,9 @@ export default function endpoint(req: VercelRequest, res: VercelResponse) {
         ),
         width =
             left +
-            (text ? text.length * 18 : size) +
+            (text ? text.length * 8 : size) +
             (right || (text ? left : 0)),
-        height = top + (text ? 18 : size) + (bottom || (text ? top : 0));
+        height = top + (text ? 8 : size) + (bottom || (text ? top : 0));
     // create swatch shape
     let shape: string;
     if (style !== "circle") {
