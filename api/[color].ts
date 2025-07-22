@@ -46,7 +46,7 @@ export default function endpoint(req: VercelRequest, res: VercelResponse) {
         right = Number(queryValue(req.query["right"] ?? req.query["r"] ?? "0")),
         text = queryValue(req.query["text"] ?? ""),
         textColor = parseColor(
-            queryValue(req.query["textColor"] ?? req.query["tc"] ?? "#000000")
+            queryValue(req.query["textColor"] ?? req.query["tc"] ?? "#FFF")
         ),
         width = left + size + right,
         height = top + size + bottom;
@@ -55,13 +55,21 @@ export default function endpoint(req: VercelRequest, res: VercelResponse) {
     if (style !== "circle") {
         const radius = style === "round" ? size / 5 : 0;
         if (text) {
-            shape = `<div style="background: ${color}; color: ${textColor}; padding-block: ${top}px; padding-inline: ${left}px; border-radius: ${radius}px;"><code>${text}</code></div>`;
+            shape = `<div style="background: ${color}; color: ${textColor}; padding-block: ${
+                top || "8"
+            }px; padding-inline: ${
+                left || "16"
+            }px; border-radius: ${radius}px;"><text>${text}</text></div>`;
         } else {
             shape = `<rect fill='${color}' x='${left}' y='${top}' width='${size}' height='${size}' rx='${radius}'/>`;
         }
     } else {
         if (text) {
-            shape = `<div style="background: ${color}; color: ${textColor}; padding-block: ${top}px; padding-inline: ${left}px; border-radius: 50%;"><code>${text}</code></div>`;
+            shape = `<div style="background: ${color}; color: ${textColor}; padding-block: ${
+                top || "8"
+            }px; padding-inline: ${
+                left || "16"
+            }px; border-radius: 50%;"><text>${text}</text></div>`;
         } else {
             shape = `<circle fill='${color}' cx='${left + size / 2}' cy='${
                 top + size / 2
