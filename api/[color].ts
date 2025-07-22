@@ -44,17 +44,29 @@ export default function endpoint(req: VercelRequest, res: VercelResponse) {
         ),
         left = Number(queryValue(req.query["left"] ?? req.query["l"] ?? "0")),
         right = Number(queryValue(req.query["right"] ?? req.query["r"] ?? "0")),
+        text = queryValue(req.query["text"] ?? ""),
+        textColor = parseColor(
+            queryValue(req.query["textColor"] ?? req.query["tc"] ?? "#000000")
+        ),
         width = left + size + right,
         height = top + size + bottom;
     // create swatch shape
     let shape: string;
     if (style !== "circle") {
         const radius = style === "round" ? size / 5 : 0;
-        shape = `<rect fill='${color}' x='${left}' y='${top}' width='${size}' height='${size}' rx='${radius}'/>`;
+        if (text) {
+            shape = `<div style="background: ${color}; color: ${textColor}; padding-block: ${top}px; padding-inline: ${left}px; border-radius: ${radius}px;"><code>${text}</code></div>`;
+        } else {
+            shape = `<rect fill='${color}' x='${left}' y='${top}' width='${size}' height='${size}' rx='${radius}'/>`;
+        }
     } else {
-        shape = `<circle fill='${color}' cx='${left + size / 2}' cy='${
-            top + size / 2
-        }' r='${size / 2}'/>`;
+        if (text) {
+            shape = `<div style="background: ${color}; color: ${textColor}; padding-block: ${top}px; padding-inline: ${left}px; border-radius: 50%;"><code>${text}</code></div>`;
+        } else {
+            shape = `<circle fill='${color}' cx='${left + size / 2}' cy='${
+                top + size / 2
+            }' r='${size / 2}'/>`;
+        }
     }
     // set response header
     res.setHeader("Content-Type", "image/svg+xml");
