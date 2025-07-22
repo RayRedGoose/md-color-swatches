@@ -62,7 +62,7 @@ export default function endpoint(req: VercelRequest, res: VercelResponse) {
     if (style !== "circle") {
         const radius = style === "round" ? size / 5 : 0;
         if (text) {
-            shape = `<rect fill='${color}' x='${left}' y='${top}' width='${width}' height='${height}' rx='${radius}'/><text x='${
+            shape = `<rect fill='${color}' x='0' y='0' width='${width}' height='${height}' rx='${radius}'/><text x='${
                 width / 2
             }' y='${
                 height / 2
@@ -72,7 +72,7 @@ export default function endpoint(req: VercelRequest, res: VercelResponse) {
         }
     } else {
         if (text) {
-            shape = `<rect fill='${color}' x='${left}' y='${top}' width='${size}' height='${size}' rx='${
+            shape = `<rect fill='${color}' x=0' y='0' width='${size}' height='${size}' rx='${
                 width / 2
             }'/><text x='${left + size / 2}' y='${
                 height / 2
