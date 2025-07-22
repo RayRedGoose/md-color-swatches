@@ -59,20 +59,20 @@ export default function endpoint(req: VercelRequest, res: VercelResponse) {
         const radius = style === "round" ? size / 5 : 0;
         if (text) {
             shape = `<rect fill='${color}' x='${left}' y='${top}' width='${width}' height='${height}' rx='${radius}'/><text x='${
-                left + size / 2
+                width / 2
             }' y='${
-                top + size / 2
-            }' fill='${textColor}' dominant-baseline='middle' text-anchor='middle'>${text}</text>`;
+                height / 2
+            }' fill='${textColor}' font-family='monospace' dominant-baseline='middle' text-anchor='middle'>${text}</text>`;
         } else {
             shape = `<rect fill='${color}' x='${left}' y='${top}' width='${width}' height='${height}' rx='${radius}'/>`;
         }
     } else {
         if (text) {
             shape = `<rect fill='${color}' x='${left}' y='${top}' width='${size}' height='${size}' rx='${
-                size / 2
+                width / 2
             }'/><text x='${left + size / 2}' y='${
-                top + size / 2
-            }' fill='${textColor}' dominant-baseline='middle' text-anchor='middle'>${text}</text>`;
+                height / 2
+            }' fill='${textColor}' font-family='monospace' dominant-baseline='middle' text-anchor='middle'>${text}</text>`;
         } else {
             shape = `<circle fill='${color}' cx='${left + size / 2}' cy='${
                 top + size / 2
