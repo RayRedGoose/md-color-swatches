@@ -12,6 +12,10 @@ function resolveStyle(prop: string, fallback: SwatchStyle): SwatchStyle {
         : fallback;
 }
 
+function getFallback(value: string | number): string {
+    return typeof value === "number" ? String(value) : value;
+}
+
 function parseColor(color: string): string | null {
     if (color.startsWith("oklch")) {
         const { light, chroma, hue, alpha } = color.match(
@@ -43,22 +47,26 @@ export default function endpoint(req: VercelRequest, res: VercelResponse) {
             queryValue(req.query["textColor"] ?? req.query["tc"] ?? "#FFF")
         ),
         top = Number(
-            queryValue(req.query["top"] ?? req.query["t"] ?? text ? "8" : "0")
+            queryValue(req.query["top"] ?? req.query["t"] ?? getFallback("0"))
         ),
         bottom = Number(
-            queryValue(req.query["bottom"] ?? req.query["b"] ?? "2")
+            queryValue(
+                req.query["bottom"] ?? req.query["b"] ?? getFallback(top)
+            )
         ),
         left = Number(
-            queryValue(req.query["left"] ?? req.query["l"] ?? text ? "16" : "0")
+            queryValue(req.query["left"] ?? req.query["l"] ?? getFallback("0"))
         ),
-        right = Number(queryValue(req.query["right"] ?? req.query["r"] ?? "0")),
-        width =
-            left +
-            (text ? text.length * 8 : size) +
-            (right || (text ? left : 0)),
-        height = top + (text ? 15 : size) + (bottom || (text ? top : 0));
+        right = Number(
+            queryValue(
+                req.query["right"] ?? req.query["r"] ?? getFallback(left)
+            )
+        ),
+        width = left + (text ? text.length * 8 : size) + right,
+        height = top + (text ? 15 : size) + bottom;
     // create swatch shape
     let shape: string;
+
     if (style !== "circle") {
         const radius = style === "round" ? size / 5 : 0;
         if (text) {
