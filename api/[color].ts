@@ -48,28 +48,34 @@ export default function endpoint(req: VercelRequest, res: VercelResponse) {
         textColor = parseColor(
             queryValue(req.query["textColor"] ?? req.query["tc"] ?? "#FFF")
         ),
-        width = left + size + right,
-        height = top + size + bottom;
+        width =
+            left +
+            (text ? text.length * 4 : size) +
+            (right || (text ? left : 0)),
+        height =
+            top +
+            (text ? text.length * 4 : size) +
+            (bottom || (text ? top : 0));
     // create swatch shape
     let shape: string;
     if (style !== "circle") {
         const radius = style === "round" ? size / 5 : 0;
         if (text) {
-            shape = `<div style="background: ${color}; color: ${textColor}; padding-block: ${
-                top || "8"
-            }px; padding-inline: ${
-                left || "16"
-            }px; border-radius: ${radius}px;"><text>${text}</text></div>`;
+            shape = `<rect fill='${color}' x='${left}' y='${top}' width='${size}' height='${size}' rx='${radius}'><text x='${
+                left + size / 2
+            }' y='${
+                top + size / 2
+            }' fill='${textColor}' dominant-baseline='middle' text-anchor='middle'>${text}</text></rect>`;
         } else {
             shape = `<rect fill='${color}' x='${left}' y='${top}' width='${size}' height='${size}' rx='${radius}'/>`;
         }
     } else {
         if (text) {
-            shape = `<div style="background: ${color}; color: ${textColor}; padding-block: ${
-                top || "8"
-            }px; padding-inline: ${
-                left || "16"
-            }px; border-radius: 50%;"><text>${text}</text></div>`;
+            shape = `<rect fill='${color}' x='${left}' y='${top}' width='${size}' height='${size}' rx='${
+                size / 2
+            }'><text x='${left + size / 2}' y='${
+                top + size / 2
+            }' fill='${textColor}' dominant-baseline='middle' text-anchor='middle'>${text}</text></rect>`;
         } else {
             shape = `<circle fill='${color}' cx='${left + size / 2}' cy='${
                 top + size / 2
