@@ -19,7 +19,7 @@ function getFallback(value: string | number): string {
 function parseColor(color: string): string | null {
     if (color.startsWith("oklch")) {
         const { light, chroma, hue, alpha } = color.match(
-            /^oklch\((?<light>\d+\.?\d*),(?<chroma>\d+\.?\d*),(?<hue>\d+\.?\d*),(?<alpha>\d+\.?\d*)\)/
+            /^oklch\((?<light>\d+\.?\d*) (?<chroma>\d+\.?\d*) (?<hue>\d+\.?\d*) \/ (?<alpha>\d+\.?\d*)\)/
         )?.groups || { light: "0", chroma: "0", hue: "0", alpha: "1" };
 
         return `oklch(${light} ${chroma} ${hue} / ${alpha})`;
